@@ -15,9 +15,9 @@ $ make test
 ```
 
 ### How to run it
-Three parameters, matrix dimension **n** , subspace **m** and starting $\beta_0 \neq 0 $ value
+Three parameters, matrix dimension **n** , subspace **m** and starting $\beta_0 \neq 0$ value
 ```
-$  ./lanzcos  -n [...]  -m [...]  -b [...]
+$  ./lanczos  -n [...]  -m [...]  -b [...]
 ```
 To run the tests, take care to set the value for n to less than 10.
 ```
