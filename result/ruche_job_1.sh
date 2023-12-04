@@ -2,9 +2,8 @@
 #SBATCH --job-name=lanzcos
 #SBATCH --output=%x.o%j
 #SBATCH --error=errorJob.txt
-#SBATCH --time=00:30:00
-#SBATCH --nodes=4
-#SBATCH --cpus-per-task=160
+#SBATCH --time=00:50:00
+#SBATCH --cpus-per-task=40
 #SBATCH --mem=25G
 #SBATCH --partition=cpu_short       # (see available partitions)
 
@@ -21,5 +20,5 @@ export OMP_NUM_THREADS=${SLURM_CPUS_PER_TASK}
 export OMP_PLACES=cores
 
 # execution with 'OMP_NUM_THREADS' OpenMP threads
-.././lanczos -n 30000 -m 30 -b 2.5
+.././lanczos -n 10000 -m 30 -b 2.5
 

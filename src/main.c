@@ -23,8 +23,8 @@ int main(int argc, char const *argv[])
   result_file = fopen(file_name ,"w");
   fprintf(result_file, "%10s %10s %10s\n", "Threads", "Time", "Gflops");
   
-  int thread_exp[6] = {1,2,4,6,8,10};
-  const int nb_exp = 6;
+  int thread_exp[9] = {1,2,4,8,12,16,24,32,40};
+  const int nb_exp = 9;
   int threads = 1;
   double time;
   double Gflops;
@@ -42,15 +42,15 @@ int main(int argc, char const *argv[])
     threads = omp_get_max_threads();
     fprintf(result_file, "%10d %10.4f %10.4f\n", threads, time, Gflops);
   }
-  
   fclose(result_file);
-
-  //printMatrix(&out.H);
+  /*
+  printMatrix(&out.H);
+  printf("\n");
+  printMatrix(&out.V);
+  */
   freeMatrix(&in.A);
   freeMatrix(&out.H);
   freeMatrix(&out.V);
   
-  //printMatrix(&out.V);
-
   return 0;
 }

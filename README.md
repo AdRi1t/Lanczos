@@ -23,3 +23,10 @@ To run the tests, take care to set the value for n to less than 10.
 ```
 $  ./test  -n [...]
 ```
+
+### Plot the result
+You can plot the results of multiple runs
+```
+$  cd result
+$  python3 plot1.py [file_1.txt] [file_2.txt] ...
+```

@@ -14,5 +14,6 @@ Vector OP_Real_AddVector(Vector* x, Vector *y);
 double OP_Real_DotProduct(Vector* x, Vector *y);
 double OP_Real_Norm(Vector* v);
 
+Vector OP_Real_Symmetric_matrixVector_V2(Matrix* M, Vector *v);
 
 #endif

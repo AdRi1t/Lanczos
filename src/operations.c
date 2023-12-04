@@ -26,7 +26,7 @@ Vector OP_MatrixVector(Matrix *M, Vector *v)
       }
       else
       {
-        result = OP_Real_Symmetric_matrixVector(M,v);
+        result = OP_Real_Symmetric_matrixVector_V2(M,v);
       }
       break;
   default:
@@ -99,6 +99,46 @@ Vector OP_Real_Symmetric_matrixVector(Matrix* M, Vector *v)
       }
     }
   }
+  free(shift);
+  return y;
+}
+
+// Real + Symmetric y = A*v
+Vector OP_Real_Symmetric_matrixVector_V2(Matrix* M, Vector *v)
+{
+  Vector y;
+  y = createVector(v->n, false);
+  allocateVector(&y);
+  double* L_tmp = (double*)calloc(v->n, sizeof(double));
+  int* shift = (int*)malloc(sizeof(int) * M->n_rows);
+  shift[0] = 0;
+  y.array_real[0] = M->array_real[shift[0]] * v->array_real[0];
+  for (size_t i = 1 ; i < M->n_rows; i++)
+  {
+    shift[i] = shift[i - 1] + (M->n_cols - i + 1);
+    y.array_real[i] = M->array_real[shift[i]] * v->array_real[i];
+  }
+  
+  #pragma omp parallel for reduction(+:L_tmp[:M->n_rows])
+  {
+    for (size_t i = 0; i < M->n_rows; i++)
+    {
+      const int index = shift[i] - i;
+      for (size_t j = i+1 ; j < M->n_cols; j++)
+      {
+        y.array_real[i] += M->array_real[index + j] * v->array_real[j];
+        L_tmp[j] += M->array_real[index +j] * v->array_real[i];
+      }
+    }
+  }
+  #pragma omp parallel for
+  {
+    for (size_t i = 0; i < M->n_rows; i++)
+    {
+      y.array_real[i] += L_tmp[i];
+    }
+  }
+  free(L_tmp);
   free(shift);
   return y;
 }
