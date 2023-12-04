@@ -1,0 +1,139 @@
+\documentclass[11pt,french]{article}
+\usepackage{graphicx}
+\usepackage{array}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[left=2.15cm , right=2.15cm, bottom=2.2cm, top=2.5cm, headheight=2.0cm,heightrounded=true,a4paper]{geometry}
+\usepackage{babel}
+\usepackage{fancyhdr}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{latexsym} 
+\usepackage{caption}
+\usepackage{siunitx}
+\usepackage{tikz}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+\setlength{\belowcaptionskip}{-10pt}
+\captionsetup{belowskip=0.0pt}
+\captionsetup{position=below}
+
+\title{TP\_CR}
+\author{Adrien Taberner}
+\date{ \today}
+\begin{document}
+	
+	\begin{center}
+		\huge
+		\textbf{Rapport méthode de Lanczos}\\
+		\vspace{15pt}
+		\LARGE
+		Algorithme de Lanczos pour des matrices Hermitienne\\
+		\vspace{10pt}	
+		\large
+		 Mounir Cherif \& Adrien Taberner  \\ 
+		 \today  \\
+		\vspace{5pt}	
+	\end{center} 
+	\vspace{25pt}	
+	\tableofcontents
+		
+	\newpage
+	
+	\section{Introduction}
+
+
+	\section{Problématique}
+	
+	\section{Approche utilisé}
+	
+	\subsection{Représentation mémoire d'une matrice symétrique}
+	Avec une matrice symétrique à coefficients réels, la moitié des coefficients, en plus de la diagonale, peuvent être présent en mémoire. La figure ci-dessous illustre les éléments qui sont enregistrés en mémoire.
+		\begin{figure}[h]
+		\centering
+		$A _{n, n}=
+		\begin{pmatrix}
+			x & x & x & x & x \\  
+			   & x & x & x & x \\  
+			   &   & x & x & x \\  
+			   &   &   & x & x \\  
+			   &   &   &   & x \\  
+		\end{pmatrix}
+		$
+	\end{figure}
+	 \newpage 
+	\section{Cas Séquentiel}
+	
+	\subsection{Description de l'algorithme}
+	\begin{algorithm}
+		\caption{Algorithme de Lanczos}\label{alg:lanczos}
+		\begin{algorithmic}[1]
+			\Require {$A$ une matrice de dimension $n$  symétrique }
+			\Require {Choisir $v_0$ un vecteur initial et $\beta_0$ un réel}
+			\State $v_1 \gets v_0 \times|| v_0||^{-1} $
+			\For{ $j = 1, 2, 3, ..., m$}
+				\State $w_j \gets Av_j - \boldsymbol{\beta_j }v_{j-1}$
+				\State $\boldsymbol{\alpha_j} \gets (w_j,v_j)$
+				\State $w_j \gets w_j - \boldsymbol{\alpha_j} v_j$
+				\State $\boldsymbol{\beta_{j+1}} \gets || w_j||_2$
+				\State $ v_{j+1} \gets w_j /\boldsymbol{\beta_{j+1}} $
+			\EndFor
+			\State \Return 
+		\end{algorithmic}
+	\end{algorithm}
+	
+	\subsection{Évaluation des performance théorique}
+	Une métrique fréquemment utilisée est le débit \emph{(throughput)} des opérations flottantes effectuées. L’acronyme \textbf{\emph{flop}} qui signifie \emph{"Floating Point Operation"} est habituellement utilisé pour mesurer la capacité du système à effectuer une opération arithmétique à virgule flottante. Le nombre d'opérations réalisées par l'algorithme sera ainsi calculé dans la suite du paragraphe.  \\
+
+	\noindent \textbf{Ligne  3}
+	cette ligne trois opérations sont réaliser : un produit matrice-vecteur, un produit scalaire et une addition de vecteurs. \\ \\
+	$\boldsymbol{ A \times v_j}$\\
+	Le nombre d’éléments de la matrice est de $\frac{n^2 + n}{2}$ \\
+	Il y a deux opération par éléments :  un produit avec un élément du vecteur  $v_j$ et une somme avec un élément de $w_j$.
+	Donc $n^2 + n$ opérations pour cette instruction. \\ \\
+	$\boldsymbol{ - \beta_j \times v_{j - 1}}$\\
+	Les opérations réalisées sont un produit scalaire et une addition sur un vecteur de taille $n$.
+	Donc il y a $2n$ flop pour cette instruction. \\  \\
+	\noindent $\boldsymbol{w_j \gets Av_j - \beta_j  v_{j-1}}$ \\
+	Il y a donc $n^2 + 3n$ opération flottante pour la ligne 3 de l'algorithme.  \\
+	
+	\noindent \textbf{Ligne  4}\\
+	$\boldsymbol {\alpha_j \gets (w_j,v_j)}$
+	Cette instruction correspond a un produit de deux éléments puis une réduction sur l'ensemble du vecteur. Il y a donc $2n$ flop pour cette ligne. \\
+	
+	\noindent\textbf{Ligne  5}\\
+	$\boldsymbol {w_j - \boldsymbol{\alpha_j} v_j}$
+	La ligne 5 est composé de deux  opération un produit scalaire et une somme de vecteur, ce qui donne $2n$ flop. \\
+	
+	\noindent\textbf{Ligne  6}\\
+	$\boldsymbol {\beta_{j+1} \gets || w_j||_2}$
+	Cette instruction correspond a un produit de chaque élément de $w_j$ puis d'une réduction des $n$ éléments. Il y a donc $2n$ flop pour cette ligne.  \\
+	
+	\noindent\textbf{Ligne  7}\\
+	$\boldsymbol {v_{j+1} \gets w_j \beta_{j+1}}$
+	La ligne 7 est composé d'un produit scalaire entre l’inverse de $\beta_{j+1}$ et le vecteur $w_j$, ce qui donne $n$ flop pour cette instruction. \\ 
+	
+	\noindent\textbf{Opération flottante par itération}
+	Pour chaque ligne de l'algorithme \ref{alg:lanczos} on a obtenue le nombre d’opérations flottante  $n^2 + 3n + 2n +2n +2n +n = n^2 + 10n$. Ce nombre d’opérations dépend de la dimension de la matrice et est majoré par le terme $n^2$, ce terme provient du produit matrice vecteur de la ligne 3. \\
+	
+	\noindent \textbf{Opérations flottante total}. Le nombre d’opération pour l'ensemble de l'algorithme de Lanczos dépend du choix de $m$, la taille de la matrice en sortie.\\ 
+	Le nombre de flop est donc de : $  m(n^2 + 10n) \quad flop $
+	
+	\subsection{Évaluation des performance pratique}
+	
+	\section{Cas paralléle}
+	
+	\subsection{Description}
+	
+	\subsection{Évaluation des performance théorique}
+	
+	\subsection{Architecture paralléle visé}
+	
+	\subsection{Évaluation des performance pratique}
+	
+	\section{Conclusion générale}
+	
+
+\end{document}
