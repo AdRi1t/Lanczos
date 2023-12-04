@@ -1,4 +1,4 @@
-![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/t/AdRi1t/lanzcos?logo=github) ![GitHub top language](https://img.shields.io/github/languages/top/AdRi1t/lanzcos?logo=C&label=Language%20)
+![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/t/AdRi1t/Lanzcos?logo=github) ![GitHub top language](https://img.shields.io/github/languages/top/AdRi1t/Lanzcos?logo=C&label=Language%20)
 
 ## Lanczos algorithm for Hermitian matrices
 Algorithm description : [Wikipedia](https://en.wikipedia.org/wiki/Lanczos_algorithm)
