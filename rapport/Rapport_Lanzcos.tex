@@ -90,14 +90,14 @@
 	\noindent \textbf{Ligne  3}
 	cette ligne trois opérations sont réaliser : un produit matrice-vecteur, un produit scalaire et une addition de vecteurs. \\ \\
 	$\boldsymbol{ A \times v_j}$\\
-	Le nombre d’éléments de la matrice est de $\frac{n^2 + n}{2}$ \\
+	Le nombre d’éléments de la matrice est de $n^2$ mais de $\frac{n^2 + n}{2}$  en mémoire.\\
 	Il y a deux opération par éléments :  un produit avec un élément du vecteur  $v_j$ et une somme avec un élément de $w_j$.
-	Donc $n^2 + n$ opérations pour cette instruction. \\ \\
+	Donc $2n^2$ opérations pour cette instruction. \\ \\
 	$\boldsymbol{ - \beta_j \times v_{j - 1}}$\\
 	Les opérations réalisées sont un produit scalaire et une addition sur un vecteur de taille $n$.
 	Donc il y a $2n$ flop pour cette instruction. \\  \\
 	\noindent $\boldsymbol{w_j \gets Av_j - \beta_j  v_{j-1}}$ \\
-	Il y a donc $n^2 + 3n$ opération flottante pour la ligne 3 de l'algorithme.  \\
+	Il y a donc $2n^2 + 2n$ opération flottante pour la ligne 3 de l'algorithme.  \\
 	
 	\noindent \textbf{Ligne  4}\\
 	$\boldsymbol {\alpha_j \gets (w_j,v_j)}$
@@ -116,10 +116,10 @@
 	La ligne 7 est composé d'un produit scalaire entre l’inverse de $\beta_{j+1}$ et le vecteur $w_j$, ce qui donne $n$ flop pour cette instruction. \\ 
 	
 	\noindent\textbf{Opération flottante par itération}
-	Pour chaque ligne de l'algorithme \ref{alg:lanczos} on a obtenue le nombre d’opérations flottante  $n^2 + 3n + 2n +2n +2n +n = n^2 + 10n$. Ce nombre d’opérations dépend de la dimension de la matrice et est majoré par le terme $n^2$, ce terme provient du produit matrice vecteur de la ligne 3. \\
+	Pour chaque ligne de l'algorithme \ref{alg:lanczos} on a obtenue le nombre d’opérations flottante  $2n^2 + 2n + 2n +2n +2n +n = 2n^2 + 9n$. Ce nombre d’opérations dépend de la dimension de la matrice et est majoré par le terme $n^2$, ce terme provient du produit matrice vecteur de la ligne 3. \\
 	
 	\noindent \textbf{Opérations flottante total}. Le nombre d’opération pour l'ensemble de l'algorithme de Lanczos dépend du choix de $m$, la taille de la matrice en sortie.\\ 
-	Le nombre de flop est donc de : $  m(n^2 + 10n) \quad flop $
+	Le nombre de flop est donc de : $  m(2n^2 + 9n) \quad flop $
 	
 	\subsection{Évaluation des performance pratique}
 	

@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=lanzcos
+#SBATCH --job-name=lanczos
 #SBATCH --output=%x.o%j
 #SBATCH --error=errorJob.txt
 #SBATCH --time=00:50:00

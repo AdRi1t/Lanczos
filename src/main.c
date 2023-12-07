@@ -38,11 +38,13 @@ int main(int argc, char const *argv[])
     }
     double t2 = getTime();
     time = (t2 - t1) / 10;
-    Gflops = (in.m*(pow(config.n,2)+10*config.n) / time ) * 1e-9;
+    Gflops = (in.m*(2*pow(config.n,2)+9*config.n) / time ) * 1e-9;
     threads = omp_get_max_threads();
     fprintf(result_file, "%10d %10.4f %10.4f\n", threads, time, Gflops);
   }
+  
   fclose(result_file);
+  
   /*
   printMatrix(&out.H);
   printf("\n");

@@ -3,7 +3,7 @@ CC= clang
 OPT= -march=native
 #OPT= -xhost
 FLAG= -O3 -g3 -Wall -fopenmp -lm
-#FLAG= -O3 -Wall -qopenmp
+#FLAG= -O3 -g3 -Wall -qopenmp
 all: lanczos
 
 lanczos: main.o matrix.o config.o vector.o operations.o lanczos.o
@@ -31,7 +31,7 @@ lanczos.o: src/lanczos.c
 	${CC} ${OPT} -c $^ -o $@ ${FLAG}
 
 config.o: src/config.c
-	${CC} -c $^ -o $@ ${FLAG}
+	${CC} ${OPT} -c $^ -o $@ ${FLAG}
 
 clean:
 	rm lanczos *.o

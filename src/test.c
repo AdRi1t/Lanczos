@@ -64,9 +64,15 @@ int main(int argc, char const *argv[])
   r = OP_Real_Symmetric_matrixVector_V2(&A,&v);
   printVector(&r);
   printf("\n");
+
+  printf("V3 : y = A*v : \n");
+  r = OP_Real_Symmetric_matrixVector_V3(&A,&v);
+  printVector(&r);
+  printf("\n");
+
   freeMatrix(&A);
   
-  printf("V1 / V2 : \n");
+  printf("V1, V2, V3 : \n");
   A = createMatrix(Symmetric,false);
   setDimensionMatrix(&A, 10000, 10000);
   allocateMatrix(&A);
@@ -82,7 +88,7 @@ int main(int argc, char const *argv[])
   }
   t2 = getTime();
   time = (t2 - t1) / 31;
-  printf("Time : %6.3f s\n",time);
+  printf("v1 time : %6.3f s\n",time);
   t1 = getTime();
   for (size_t j = 0; j < 31; j++)
   {
@@ -90,7 +96,16 @@ int main(int argc, char const *argv[])
   }
   t2 = getTime();
   time = (t2 - t1) / 31;
-  printf("Time : %6.3f s\n",time);
+  printf("v2 time : %6.3f s\n",time);
+
+  t1 = getTime();
+  for (size_t j = 0; j < 31; j++)
+  {
+    r = OP_Real_Symmetric_matrixVector_V3(&A,&v);
+  }
+  t2 = getTime();
+  time = (t2 - t1) / 31;
+  printf("V3 time : %6.3f s\n",time);
 
   printf("Test A1 : \n");
   A = createMatrix(Symmetric, false);
