@@ -82,7 +82,7 @@ def main():
   ax4.set_xlabel("Nombre de threads")
     
   ax1.set_ylabel("Temps (secondes)")
-  ax2.set_ylabel("Accélération %")
+  ax2.set_ylabel("Accélération")
   ax3.set_ylabel("Efficacité")
   ax4.set_ylabel("Gflops")
   
