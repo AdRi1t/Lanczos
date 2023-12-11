@@ -14,7 +14,7 @@ Vector createVector(int n, bool isComplex);
 bool allocateVector(Vector* v);
 bool fillRandom(Vector* v);
 void fillConst(Vector* v, double k);
+void copyVector(Vector* dest, Vector* src);
 void printVector(Vector* v);
 void freeVector(Vector* v);
-
 #endif

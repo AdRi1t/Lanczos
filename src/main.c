@@ -28,6 +28,8 @@ int main(int argc, char const *argv[])
   int threads = 1;
   double time;
   double Gflops;
+  
+   
   for (size_t i = 0; i < nb_exp; i++)
   {
     omp_set_num_threads(thread_exp[i]);
@@ -35,6 +37,8 @@ int main(int argc, char const *argv[])
     for (size_t j = 0; j < 10; j++)
     {
       out = computeLanzcosAlgo(in);
+      freeMatrix(&out.H);
+      freeMatrix(&out.V);
     }
     double t2 = getTime();
     time = (t2 - t1) / 10;
@@ -42,17 +46,20 @@ int main(int argc, char const *argv[])
     threads = omp_get_max_threads();
     fprintf(result_file, "%10d %10.4f %10.4f\n", threads, time, Gflops);
   }
-  
   fclose(result_file);
   
   /*
+  out = computeLanzcosAlgo(in);
   printMatrix(&out.H);
   printf("\n");
   printMatrix(&out.V);
-  */
-  freeMatrix(&in.A);
   freeMatrix(&out.H);
   freeMatrix(&out.V);
+  */
+  freeVector(&in.v_0);
+  freeMatrix(&in.A);
   
   return 0;
 }
+
+//printf("test : %d\n",__LINE__);

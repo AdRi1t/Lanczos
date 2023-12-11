@@ -189,19 +189,16 @@ Vector OP_Real_Symmetric_matrixVector_V3(Matrix* M, Vector *v)
 }
 
 
-Vector OP_Real_scaleVector(Vector *v, double constReal)
+void OP_Real_scaleVector(Vector *v, double constReal)
 {
-  Vector y;
-  y = createVector(v->n, false);
-  allocateVector(&y);
   #pragma omp parallel for simd
   {
-    for (size_t i = 0; i < y.n; i++)
+    for (size_t i = 0; i < v->n; i++)
     {
-      y.array_real[i] = constReal * v->array_real[i];
+      v->array_real[i] = constReal * v->array_real[i];
     }
   }
-  return y;
+  return;
 }
 
 Vector OP_Real_AddVector(Vector *x, Vector *y)

@@ -26,6 +26,13 @@ int main(int argc, char const *argv[])
   printVector(&v);
   printf("\n");
 
+  printf("y = v : \n");
+  Vector copy = createVector(v.n, false);
+  copyVector(&copy,&v);
+  printVector(&copy);
+  freeVector(&copy);
+  printf("\n");
+
   printf("k = ||v||_2 : \n");
   double k = OP_Real_Norm(&v);
   printf("%f \n", k);
@@ -85,6 +92,7 @@ int main(int argc, char const *argv[])
   for (size_t j = 0; j < 31; j++)
   {
     r = OP_Real_Symmetric_matrixVector(&A,&v);
+    freeVector(&r);
   }
   t2 = getTime();
   time = (t2 - t1) / 31;
@@ -93,6 +101,7 @@ int main(int argc, char const *argv[])
   for (size_t j = 0; j < 31; j++)
   {
     r = OP_Real_Symmetric_matrixVector_V2(&A,&v);
+    freeVector(&r);
   }
   t2 = getTime();
   time = (t2 - t1) / 31;
@@ -102,10 +111,14 @@ int main(int argc, char const *argv[])
   for (size_t j = 0; j < 31; j++)
   {
     r = OP_Real_Symmetric_matrixVector_V3(&A,&v);
+    freeVector(&r);
   }
   t2 = getTime();
   time = (t2 - t1) / 31;
   printf("V3 time : %6.3f s\n",time);
+ 
+  freeVector(&v);
+  freeMatrix(&A);
 
   printf("Test A1 : \n");
   A = createMatrix(Symmetric, false);
@@ -113,10 +126,9 @@ int main(int argc, char const *argv[])
   allocateMatrix(&A);
   fillA1TestMatrix(&A);
   printMatrix(&A);
+  freeMatrix(&A);
   printf("\n");
 
-  freeVector(&v);
-  freeVector(&r);
   
   return 0;  
 }

@@ -43,6 +43,23 @@ void fillConst(Vector *v, const double k)
   return;
 }
 
+void copyVector(Vector *dest, Vector *src)
+{
+  if(dest->isAllocated)
+  {
+    freeVector(dest);
+  }
+  *dest = createVector(src->n, false);
+  allocateVector(dest);
+  #pragma omp parallel for simd
+  {
+    for (size_t i = 0; i < dest->n; i++)
+    {
+      dest->array_real[i] = src->array_real[i];
+    }
+  }
+}
+
 void printVector(Vector *v)
 {
   for (size_t i = 0; i < v->n; i++)

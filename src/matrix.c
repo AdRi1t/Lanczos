@@ -21,6 +21,7 @@ Matrix createMatrix(Matrix_type type, bool setComplex)
   M.array_size = 0;
   M.array_real = NULL;
   M.array_imag = NULL;
+  M.isAllocated = false;
   M.n_cols = 0;
   M.n_rows = 0;
   return M;

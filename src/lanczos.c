@@ -12,21 +12,24 @@ LanzcosOut computeLanzcosAlgo(LanzcosIn init)
   allocateMatrix(&result.V);
   double B_j = init.B_0;
   double a_j = 0.0;
-  Vector v_j = OP_Real_scaleVector(&init.v_0, 1/OP_Real_Norm(&init.v_0));
-  Vector v_j_1 = init.v_0;
+  Vector v_j = createVector(init.A.n_rows, false);
+  Vector v_j_1 = createVector(init.A.n_rows, false);
+  copyVector(&v_j, &init.v_0);
+  copyVector(&v_j_1, &init.v_0);
+  OP_Real_scaleVector(&v_j, 1/OP_Real_Norm(&v_j));
   for (int j = 0; j < init.m; j++)
   {
     // 3 w_j = A*v_j + B_j*v_j-1
     Vector tmp_1 = OP_MatrixVector(&init.A, &v_j);
-    Vector tmp_2 = OP_Real_scaleVector(&v_j_1, -B_j);
-    Vector tmp_3 = OP_Real_AddVector(&tmp_1, &tmp_2);
+    OP_Real_scaleVector(&v_j_1, -B_j);
+    Vector tmp_2 = OP_Real_AddVector(&tmp_1, &v_j_1);
 
     // 4 a_j = (w_j,v_j)
-    a_j = OP_Real_DotProduct(&tmp_3, &v_j);
+    a_j = OP_Real_DotProduct(&tmp_2, &v_j);
     
     // 5 w_j = w_j - a_j*v_j
-    Vector tmp_4 = OP_Real_scaleVector(&v_j, - a_j);
-    Vector w_j = OP_Real_AddVector(&tmp_3, &tmp_4);
+    OP_Real_scaleVector(&v_j, - a_j);
+    Vector w_j = OP_Real_AddVector(&tmp_2, &v_j);
     
     // 6 b_j = ||w_j||
     B_j = OP_Real_Norm(&w_j);
@@ -42,14 +45,13 @@ LanzcosOut computeLanzcosAlgo(LanzcosIn init)
     }
     
     // 7 v_j+1 = w_j/b_j+1
-    v_j = OP_Real_scaleVector(&w_j,1/B_j);
-    v_j_1 = v_j;
+    copyVector(&v_j,&w_j);
+    OP_Real_scaleVector(&v_j, 1/B_j);
+    copyVector(&v_j_1, &v_j);
     
     freeVector(&w_j);
     freeVector(&tmp_1);
     freeVector(&tmp_2);
-    freeVector(&tmp_3);
-    freeVector(&tmp_4);
   
     #pragma omp parallel
     {
@@ -59,5 +61,7 @@ LanzcosOut computeLanzcosAlgo(LanzcosIn init)
       }
     }
   }
+  freeVector(&v_j);
+  freeVector(&v_j_1);
   return result;
 }
