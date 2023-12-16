@@ -6,6 +6,8 @@ typedef struct
   int n;
   int m;
   double b_0;
+  char* filePath;
+  bool haveFile;
 }runConfig;
 
 runConfig parseCommand(int argc, char* argv[]);

@@ -20,5 +20,5 @@ export OMP_NUM_THREADS=${SLURM_CPUS_PER_TASK}
 export OMP_PLACES=cores
 
 # execution with 'OMP_NUM_THREADS' OpenMP threads
-.././lanczos -n 10000 -m 30 -b 2.5
+.././lanczos -n 5000 -m 30 -b 2.5
 

@@ -7,16 +7,23 @@ int main(int argc, char const *argv[])
   LanzcosOut out;
   config = parseCommand(argc,argv);
   
+  in.A = createMatrix(Symmetric, false);
+  if (config.haveFile)
+  {
+    in.A = loadFromFile(config.filePath);
+    config.n = in.A.n_rows;
+  }
+  else
+  {
+    setDimensionMatrix(&in.A, config.n, config.n);
+    allocateMatrix(&in.A);
+    fillRandomMatrix(&in.A);
+  }
   in.B_0 = config.b_0;
   in.m = config.m;
-  in.A = createMatrix(Symmetric, false);
   in.v_0 = createVector(config.n, false);
-  setDimensionMatrix(&in.A, config.n, config.n);
-  allocateMatrix(&in.A);
   allocateVector(&in.v_0);
-  fillConst(&in.v_0, 1.0);
-  fillRandomMatrix(&in.A);
-  
+  fillConst(&in.v_0, 1.0);  
   FILE* result_file = NULL;
   char *file_name = (char*)malloc(sizeof(char)*256);
   sprintf(file_name,"lanczosResult_%d_%d.txt", config.n, config.m);
@@ -29,7 +36,6 @@ int main(int argc, char const *argv[])
   double time;
   double Gflops;
   
-   
   for (size_t i = 0; i < nb_exp; i++)
   {
     omp_set_num_threads(thread_exp[i]);

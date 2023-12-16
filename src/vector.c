@@ -45,6 +45,7 @@ void fillConst(Vector *v, const double k)
 
 void copyVector(Vector *dest, Vector *src)
 {
+  assert(dest->n == src->n);
   if(dest->isAllocated)
   {
     freeVector(dest);

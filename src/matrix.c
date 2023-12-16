@@ -1,5 +1,6 @@
 #include "lanczos.h"
 #include "matrix.h"
+#include "mmio.h"
 
 // "High level"
 
@@ -25,6 +26,50 @@ Matrix createMatrix(Matrix_type type, bool setComplex)
   M.n_cols = 0;
   M.n_rows = 0;
   return M;
+}
+
+Matrix loadFromFile(char *filePath)
+{
+  FILE* matrix_file = NULL;
+  Matrix mtx;
+  MM_typecode matcode;
+  int n,m,nnz;
+
+  mtx = createMatrix(Symmetric,false);
+  matrix_file = fopen(filePath,"r");
+  if(matrix_file == NULL)
+  {
+    printf("No file at %s\n",filePath);
+    return mtx;
+  }
+  mm_read_banner(matrix_file, &matcode);
+  if (!mm_is_symmetric(matcode))
+  {
+    printf("Need symmetric mtx \n");
+  }
+  
+  mm_read_mtx_crd_size(matrix_file, &n, &m, &nnz);
+  setDimensionMatrix(&mtx, n, n);
+  allocateGeneralMatrix(&mtx);
+
+  int* shift = (int*)malloc(sizeof(int) * mtx.n_rows);
+  shift[0] = 0;
+  for (size_t i = 1 ; i < mtx.n_rows; i++)
+  {
+    shift[i] = shift[i - 1] + (mtx.n_cols - i);
+  }
+  int i,j;
+  double value;
+  for (int k=0; k<nnz; k++)
+  {
+    fscanf(matrix_file, "%d %d %lg\n", &i, &j, &value);
+    i--;
+    j--;
+    mtx.array_real[shift[i] + j] = value;
+    mtx.array_real[shift[j] + i] = value;
+  }
+  fclose(matrix_file);
+  return mtx;  
 }
 
 bool setDimensionMatrix(Matrix *M, int n_rows, int n_cols)

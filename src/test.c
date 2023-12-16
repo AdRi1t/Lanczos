@@ -1,7 +1,7 @@
 #include "lanczos.h"
 
 int main(int argc, char const *argv[])
-{ 
+{
   runConfig config;
   Matrix A;
   Vector v,r;
@@ -78,7 +78,22 @@ int main(int argc, char const *argv[])
   printf("\n");
 
   freeMatrix(&A);
+
+  printf("Test A1 : \n");
+  A = createMatrix(Symmetric, false);
+  setDimensionMatrix(&A, 8, 8);
+  allocateMatrix(&A);
+  fillA1TestMatrix(&A);
+  printMatrix(&A);
+  freeMatrix(&A);
+  printf("\n");
+
+  printf("Read from file : \n");
+  A = loadFromFile("mtx/mtx_TEST.mtx");
+  printMatrix(&A);
+  freeMatrix(&A);
   
+  // Test version of Matrix vector product
   printf("V1, V2, V3 : \n");
   A = createMatrix(Symmetric,false);
   setDimensionMatrix(&A, 10000, 10000);
@@ -120,16 +135,7 @@ int main(int argc, char const *argv[])
   freeVector(&v);
   freeMatrix(&A);
 
-  printf("Test A1 : \n");
-  A = createMatrix(Symmetric, false);
-  setDimensionMatrix(&A, 8, 8);
-  allocateMatrix(&A);
-  fillA1TestMatrix(&A);
-  printMatrix(&A);
-  freeMatrix(&A);
-  printf("\n");
 
-  
   return 0;  
 }
 

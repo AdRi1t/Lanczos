@@ -23,7 +23,7 @@ LanzcosOut computeLanzcosAlgo(LanzcosIn init)
     Vector tmp_1 = OP_MatrixVector(&init.A, &v_j);
     OP_Real_scaleVector(&v_j_1, -B_j);
     Vector tmp_2 = OP_Real_AddVector(&tmp_1, &v_j_1);
-
+    
     // 4 a_j = (w_j,v_j)
     a_j = OP_Real_DotProduct(&tmp_2, &v_j);
     

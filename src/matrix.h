@@ -21,6 +21,7 @@ typedef struct
 
 // "High level"
 Matrix createMatrix(Matrix_type type, bool setComplex);
+Matrix loadFromFile(char* filePath);
 bool setDimensionMatrix(Matrix *M, int n_rows, int n_cols);
 bool allocateMatrix(Matrix* M);
 void canBeComplex(Matrix* M , bool isComplex);
