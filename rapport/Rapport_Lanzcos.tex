@@ -4,7 +4,7 @@
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{lmodern}
-\usepackage[left=2.15cm , right=2.15cm, bottom=2.2cm, top=2.5cm, headheight=2.0cm,heightrounded=true,a4paper]{geometry}
+\usepackage[left=2.2cm,right=2.2cm, bottom=2.5cm, top=2.5cm, headheight=2.0cm,footskip=1.5cm,headsep=1cm, heightrounded=true,a4paper]{geometry}
 \usepackage{babel}
 \usepackage{fancyhdr}
 \usepackage{amsmath}
@@ -15,10 +15,14 @@
 \usepackage{tikz}
 \usepackage{algorithm}
 \usepackage{algpseudocode}
-
+\usepackage{hyperref}
+\usepackage{tikz}
+\captionsetup[figure]{font=small}
 \setlength{\belowcaptionskip}{-10pt}
 \captionsetup{belowskip=0.0pt}
 \captionsetup{position=below}
+\hypersetup{colorlinks=true,citecolor=blue,	urlcolor=black,linkcolor=black}
+
 
 \title{TP\_CR}
 \author{Adrien Taberner}
@@ -26,6 +30,7 @@
 \begin{document}
 	
 	\begin{center}
+		\vspace*{15pt}
 		\huge
 		\textbf{Rapport méthode de Lanczos}\\
 		\vspace{15pt}
@@ -37,16 +42,29 @@
 		 \today  \\
 		\vspace{5pt}	
 	\end{center} 
-	\vspace{25pt}	
+	
+	\vspace{30pt}	
 	\tableofcontents
-		
+	
 	\newpage
 	
-	\section{Introduction}
-
-
-	\section{Problématique}
+	\renewcommand{\headrulewidth}{0.4pt}
+	\renewcommand{\footrulewidth }{0.4pt}
+	\fancyfoot[C]{}
+	\fancyfoot[R]{\thepage}
+	\fancyfoot[L]{ Mounir Cherif \& Adrien Taberner}
+	\fancyhead[L]{MPNA}
 	
+	\section{Introduction}
+		\pagestyle{fancy}
+	\par En algèbre linéaire l'algorithme de Lanczos est une méthode itérative. Elle se présente comme une variante de l'algorithme d'Arnoldi, spécifiquement adaptée aux matrices symétriques et hermitiennes. Une caractéristique de cet algorithme réside dans la transformation de la matrice initiale, qui passe d'une forme Hessenberg supérieure à une forme tridiagonale. \\
+
+	\par L'amélioration apportée par l'algorithme de Lanczos par rapport à ses prédécesseurs se manifeste dans la manière dont chaque vecteur $v$ est construit. Dans cette approche, chaque $v$ est restreint à être orthogonal à tous les vecteurs générés précédemment. Pendant la construction de ces vecteurs, les constantes de normalisation sont regroupées dans une matrice tridiagonale. Les valeurs propres les plus significatives de cette matrice convergent rapidement vers celles de la matrice d'origine. \\
+
+	\par Cette méthodologie offre un avantage majeur, limitant l'opération de grande envergure à la multiplication par la matrice $A$. Ainsi, l'algorithme de Lanczos simplifie le processus, concentrant l'intérêt sur cette opération cruciale. \\
+	
+	\section{Problématique}
+	\par L'algorithme de Lanczos s'inscrit dans le contexte de la recherche des valeurs propres et des vecteurs propres dominantes d'une matrice symétrique ou hermitienne.
 	\section{Approche utilisé}
 	
 	\subsection{Représentation mémoire d'une matrice symétrique}
@@ -55,11 +73,11 @@
 		\centering
 		$A _{n, n}=
 		\begin{pmatrix}
-			x & x & x & x & x \\  
-			   & x & x & x & x \\  
-			   &   & x & x & x \\  
-			   &   &   & x & x \\  
-			   &   &   &   & x \\  
+			a_{1,1} & a_{1,2}& \cdots & \cdots & a_{1,n} \\  
+			   & a_{2,2} & \cdots & \cdots & a_{2,n} \\  
+			   &   & \ddots &   & \vdots \\  
+			   &   &   & \ddots & \vdots \\  
+			   &   &   &   & a_{n,n}\\  
 		\end{pmatrix}
 		$
 	\end{figure}
@@ -122,6 +140,7 @@
 	Le nombre de flop est donc de : $  m(2n^2 + 9n) \quad flop $
 	
 	\subsection{Évaluation des performance pratique}
+	Les performance sont mesuré sur un cœur du processeur Intel Xeon Gold 6230
 	
 	\section{Cas paralléle}
 	

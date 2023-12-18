@@ -6,10 +6,10 @@ FLAG= -O3 -g3 -Wall -fopenmp -lm
 #FLAG= -O3 -g3 -Wall -qopenmp
 all: lanczos
 
-lanczos: main.o matrix.o config.o vector.o operations.o lanczos.o
+lanczos: main.o matrix.o config.o vector.o operations.o lanczos.o mmio.o
 	${CC} -o $@ $^ ${FLAG}
 
-test: test.o matrix.o config.o vector.o operations.o lanczos.o
+test: test.o matrix.o config.o vector.o operations.o lanczos.o mmio.o
 	${CC} -o $@ $^ ${FLAG}
 
 main.o: src/main.c
@@ -29,6 +29,9 @@ operations.o: src/operations.c
 
 lanczos.o: src/lanczos.c
 	${CC} ${OPT} -c $^ -o $@ ${FLAG}
+
+mmio.o: src/mmio.c
+	${CC} -c $^ -o $@
 
 config.o: src/config.c
 	${CC} ${OPT} -c $^ -o $@ ${FLAG}
