@@ -15,6 +15,7 @@
 #include "matrix.h"
 #include "vector.h"
 #include "operations.h"
+#include "eigen.h"
 
 typedef struct
 {

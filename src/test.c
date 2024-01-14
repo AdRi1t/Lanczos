@@ -88,11 +88,23 @@ int main(int argc, char const *argv[])
   freeMatrix(&A);
   printf("\n");
 
+  // Read from file
   printf("Read from file : \n");
   A = loadFromFile("mtx/mtx_TEST.mtx");
   printMatrix(&A);
   freeMatrix(&A);
   
+  printf("Eigen Test from file : \n");
+  A = loadFromFile("mtx/mtx_TEST.mtx");
+  EigenProblem res;
+  printMatrix(&A);
+  res = computeEigen(&A);
+  printMatrix(&res.eigen_vector);
+  printVector(&res.eigen_value);
+  freeVector(&res.eigen_value);
+  freeMatrix(&res.eigen_vector);
+  freeMatrix(&A);
+
   // Test version of Matrix vector product
   printf("V1, V2, V3 : \n");
   A = createMatrix(Symmetric,false);

@@ -1,15 +1,15 @@
 CC= clang
 #CC= icx
-OPT= -march=native
+OPT= -march=native -O3 -g3
 #OPT= -xhost
-FLAG= -O3 -g3 -Wall -fopenmp -lm
+FLAG= -llapacke -llapack -lblas -Wall -fopenmp -lm
 #FLAG= -O3 -g3 -Wall -qopenmp
 all: lanczos
 
-lanczos: main.o matrix.o config.o vector.o operations.o lanczos.o mmio.o
+lanczos: main.o matrix.o config.o vector.o operations.o lanczos.o eigen.o mmio.o
 	${CC} -o $@ $^ ${FLAG}
 
-test: test.o matrix.o config.o vector.o operations.o lanczos.o mmio.o
+test: test.o matrix.o config.o vector.o operations.o lanczos.o eigen.o mmio.o
 	${CC} -o $@ $^ ${FLAG}
 
 main.o: src/main.c
@@ -28,6 +28,9 @@ operations.o: src/operations.c
 	${CC} ${OPT} -c $^ -o $@ ${FLAG}
 
 lanczos.o: src/lanczos.c
+	${CC} ${OPT} -c $^ -o $@ ${FLAG}
+
+eigen.o: src/eigen.c
 	${CC} ${OPT} -c $^ -o $@ ${FLAG}
 
 mmio.o: src/mmio.c
