@@ -97,10 +97,9 @@ int main(int argc, char const *argv[])
   printf("Eigen Test from file : \n");
   A = loadFromFile("mtx/mtx_TEST.mtx");
   EigenProblem res;
-  printMatrix(&A);
   res = computeEigen(&A);
-  printMatrix(&res.eigen_vector);
   printVector(&res.eigen_value);
+  printMatrix(&res.eigen_vector);
   freeVector(&res.eigen_value);
   freeMatrix(&res.eigen_vector);
   freeMatrix(&A);

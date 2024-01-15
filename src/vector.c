@@ -63,22 +63,19 @@ void copyVector(Vector *dest, Vector *src)
 
 void printVector(Vector *v)
 {
-  switch (v->isComplex)
+  if(v->isComplex)
   {
-    case true:
-      for (size_t i = 0; i < v->n; i++)
-      {
-        printf("(%6.3e,%6.3e) ",v->array_real[i], v->array_imag[i]);
-      }
-      break;
-    case false:
-      for (size_t i = 0; i < v->n; i++)
-      {
-        printf("%6.3e ",v->array_real[i]);
-      }
-      break;
-    default:
-      break;
+    for (size_t i = 0; i < v->n; i++)
+    {
+      printf("(%6.3e,%6.3e) ",v->array_real[i], v->array_imag[i]);
+    }
+  }
+  else
+  {
+    for (size_t i = 0; i < v->n; i++)
+    {
+      printf("%6.3e ",v->array_real[i]);
+    }
   }
   printf("\n");
 }

@@ -65,8 +65,14 @@ Matrix loadFromFile(char *filePath)
     fscanf(matrix_file, "%d %d %lg\n", &i, &j, &value);
     i--;
     j--;
-    mtx.array_real[shift[i] + j] = value;
-    mtx.array_real[shift[j] + i] = value;
+    if(i <= j)
+    {
+      mtx.array_real[shift[i] + j] = value;
+    }
+    else
+    {
+      mtx.array_real[shift[j] + i] = value;
+    }
   }
   fclose(matrix_file);
   return mtx;  
@@ -202,13 +208,27 @@ void printSymmetric(const Matrix *M)
 
 void printGeneral(const Matrix *M)
 {
-  for (size_t i = 0; i < M->n_rows; i++)
+  if(M->isComplex)
   {
-    for (size_t j = 0; j < M->n_cols; j++)
+    for (size_t i = 0; i < M->n_rows; i++)
     {
-      printf("% 6.3e ",M->array_real[i*M->n_cols + j]);
+      for (size_t j = 0; j < M->n_cols; j++)
+      {
+        printf(" (% 6.3e, % 6.3e)",M->array_real[i*M->n_cols + j], M->array_imag[i*M->n_cols + j]);
+      }
+      printf("\n"); 
     }
-    printf("\n"); 
+  }
+  else
+  {
+    for (size_t i = 0; i < M->n_rows; i++)
+    {
+      for (size_t j = 0; j < M->n_cols; j++)
+      {
+        printf("% 6.3e ",M->array_real[i*M->n_cols + j]);
+      }
+      printf("\n"); 
+    }
   }
 }
 
