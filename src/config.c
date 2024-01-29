@@ -5,8 +5,9 @@ runConfig parseCommand(int argc, char* argv[])
   extern char* optarg;
   int opt;
   runConfig config;
-  config.n = 0;
-  config.m = 0;
+  config.n = 1;
+  config.m = 1;
+  config.B = 0;
   config.b_0 = 1.0;
   config.filePath = (char*)calloc(256,sizeof(char));
   config.haveFile = false;
@@ -15,7 +16,7 @@ runConfig parseCommand(int argc, char* argv[])
     printUsage(argv[0]);
     exit(EXIT_SUCCESS);
   }
-  while((opt = getopt(argc, argv, "hn:m:b:f:")) != -1)
+  while((opt = getopt(argc, argv, "hn:m:b:f:B:")) != -1)
   {
     switch(opt)
     {
@@ -28,6 +29,9 @@ runConfig parseCommand(int argc, char* argv[])
         break;
       case 'm':
         config.m = atoi(optarg);
+        break;
+      case 'B':
+        config.B = atoi(optarg);
         break;
       case 'f':
         strcpy(config.filePath, optarg);
@@ -44,7 +48,7 @@ runConfig parseCommand(int argc, char* argv[])
 void printUsage(const char* progName)
 {
   printf("Usage: \n");
-  printf("%s -n [dimension] -m [nombre de valeurs propres] -b [valeur de B_0] -f [file path to .mtx] \n",progName);
+  printf("%s -n [dimension] -m [nombre de valeurs propres] -b [valeur de B_0] -f [file path to .mtx] -B [Benchmark see docs]\n",progName);
 }
 
 double getTime(void)

@@ -1,6 +1,50 @@
 #include "lanczos.h"
 #include "operations.h"
 
+void OP_transpose(Matrix *M)
+{
+  assert(M->n_cols == M->n_rows);
+  switch (M->type)
+  {
+    case General:
+      if(M->isComplex == true)
+      {
+        double a;
+        double b;
+        for(unsigned int i = 0; i < M->n_rows; i++)
+        {
+          for (unsigned int j = i + 1; j < M->n_cols; j++)
+          {
+            a = M->array_real[i*M->n_cols + j];
+            b = M->array_imag[i*M->n_cols + j];
+            M->array_real[i*M->n_cols + j] = M->array_real[j*M->n_cols + i];
+            M->array_imag[i*M->n_cols + j] = M->array_imag[j*M->n_cols + i];
+            M->array_real[j*M->n_cols + i] = a;
+            M->array_imag[j*M->n_cols + i] = b;
+          }
+        }
+      }
+      else
+      {
+        double a;
+        for(unsigned int i = 0; i < M->n_rows; i++)
+        {
+          for (unsigned int j = i + 1; j < M->n_cols; j++)
+          {
+            a = M->array_real[i*M->n_cols + j];
+            M->array_real[i*M->n_cols + j] = M->array_real[j*M->n_cols + i];
+            M->array_real[j*M->n_cols + i] = a;
+          }
+        }
+      }
+      break;
+    case Symmetric:
+      break;
+    default:
+      break;
+  }
+}
+
 // "High level"
 Vector OP_MatrixVector(Matrix *M, Vector *v)
 {
@@ -8,7 +52,7 @@ Vector OP_MatrixVector(Matrix *M, Vector *v)
   switch (M->type)
   {
     case General:
-      if (M->isComplex)
+      if(M->isComplex)
       {
         result = OP_Complex_General_matrixVector(M,v);
       }

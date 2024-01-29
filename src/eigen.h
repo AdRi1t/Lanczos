@@ -9,5 +9,6 @@ typedef struct
 }EigenProblem;
 
 EigenProblem computeEigen(Matrix* A);
+EigenProblem order_and_select(EigenProblem P, unsigned int m);
 
 #endif

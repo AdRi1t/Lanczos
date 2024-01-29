@@ -51,6 +51,10 @@ int main(int argc, char const *argv[])
   r = OP_Real_General_matrixVector(&A,&v);
   printVector(&r);
   printf("\n");
+
+  printf("A transpose test : \n");
+  OP_transpose(&A);
+  printMatrix(&A);
   freeMatrix(&A);
 
   // Symmetric test 
@@ -98,6 +102,11 @@ int main(int argc, char const *argv[])
   A = loadFromFile("mtx/mtx_TEST.mtx");
   EigenProblem res;
   res = computeEigen(&A);
+  printVector(&res.eigen_value);
+  printMatrix(&res.eigen_vector);;
+
+  res = order_and_select(res,config.m/2);
+
   printVector(&res.eigen_value);
   printMatrix(&res.eigen_vector);
   freeVector(&res.eigen_value);

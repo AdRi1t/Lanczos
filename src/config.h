@@ -5,6 +5,7 @@ typedef struct
 {
   int n;
   int m;
+  int B;
   double b_0;
   char* filePath;
   bool haveFile;

@@ -91,10 +91,10 @@ def main():
   fig3.tight_layout()
   fig4.tight_layout()
   
-  fig1.savefig("Time",dpi=250)
-  fig2.savefig("SpeedUp",dpi=250)
-  fig3.savefig("Efficiency",dpi=250)
-  fig4.savefig("Gflops",dpi=250)
+  fig1.savefig("OMP_Time",dpi=250)
+  fig2.savefig("OMP_SpeedUp",dpi=250)
+  fig3.savefig("OMP_Efficiency",dpi=250)
+  fig4.savefig("OMP_Gflops",dpi=250)
   
   return 0
 

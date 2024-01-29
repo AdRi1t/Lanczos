@@ -23,7 +23,13 @@ To run the tests, take care to set the value for n to less than 10.
 ```
 $  ./test  -n [...]
 ```
-
+To run the benchmark add -B<arg>.
+```
+$  ./lanczos  -n [...]  -m [...]  -b [...] -B [benchmark number]
+```
+- 1 : Bench for number of threads from 1 to 40
+- 2 : Bench for values of m from 5 to 50 sequentially
+ 
 ### Plot the result
 You can plot the results of multiple runs
 ```

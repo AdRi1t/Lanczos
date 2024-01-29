@@ -1,7 +1,7 @@
 #ifndef OPERATIONS_H
 #define OPERATIONS_H
 
-
+void OP_transpose(Matrix* M);
 Vector OP_MatrixVector(Matrix* M, Vector* v);
 
 // "Low Level"
