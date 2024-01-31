@@ -31,6 +31,7 @@ typedef struct
   Matrix V;
 }LanzcosOut;
 
+Vector completeReorthogonalization(double *currentVector,Matrix *V, int currentIndex);
 LanzcosOut computeLanzcosAlgo(LanzcosIn init);
 
 #endif

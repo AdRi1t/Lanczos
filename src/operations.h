@@ -16,5 +16,7 @@ double OP_Real_Norm(Vector* v);
 
 Vector OP_Real_Symmetric_matrixVector_V2(Matrix* M, Vector *v);
 Vector OP_Real_Symmetric_matrixVector_V3(Matrix* M, Vector *v);
+double DotProduct(double *x, double *y,int vectorSize);
+double NormVector(double *v,int vectorSize);
 
 #endif

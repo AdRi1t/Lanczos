@@ -1,6 +1,53 @@
 #include "lanczos.h"
 
 
+Vector completeReorthogonalization(double *currentVector,Matrix *V, int currentIndex) {
+    double *w = (double*)calloc(V->n_rows, sizeof(double));
+    double *w_j = (double*)calloc(V->n_rows, sizeof(double));
+    Vector vect;
+
+    #pragma omp parallel for
+    for (size_t i = 0; i < V->n_rows; i++)
+    {
+        w[i] = currentVector[i];
+    }
+
+    for (int j = 0; j < currentIndex; j++) {
+        #pragma omp parallel for
+        for (size_t i = 0; i < V->n_rows; i++)
+        {
+            w_j[i] = V->array_real[i*V->n_cols + j];
+        }
+
+        double r_jk = DotProduct(w,w_j,V->n_rows);
+        #pragma omp parallel for
+        for (size_t i = 0; i < V->n_rows; i++)
+        {
+            w[i] -= r_jk*w_j[i];
+        }
+
+    }
+
+    double r_kk = NormVector(w,V->n_rows);
+
+    #pragma omp parallel for
+    for (size_t i = 0; i < V->n_rows; i++)
+    {
+        w[i] /= r_kk;
+    }
+
+    vect = createVector(V->n_rows,false);
+    allocateVector(&vect);
+    #pragma omp parallel for
+    for (size_t i = 0; i < vect.n; i++)
+    {
+        vect.array_real[i]=w[i];
+        vect.array_imag[i] = 0;
+    }
+
+    return vect;
+}
+
 LanzcosOut computeLanzcosAlgo(LanzcosIn init)
 {
   LanzcosOut result;
@@ -47,6 +94,12 @@ LanzcosOut computeLanzcosAlgo(LanzcosIn init)
     // 7 v_j+1 = w_j/b_j+1
     copyVector(&v_j,&w_j);
     OP_Real_scaleVector(&v_j, 1/B_j);
+
+    double *currentVector = (double*)calloc(v_j.n, sizeof(double));
+    for(size_t i=0;i<v_j.n;i++){
+        currentVector[i] = v_j.array_real[i];
+    }
+    v_j = completeReorthogonalization(currentVector,&result.V,j);
     copyVector(&v_j_1, &v_j);
     
     freeVector(&w_j);
