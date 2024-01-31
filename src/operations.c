@@ -313,3 +313,23 @@ Vector OP_Complex_General_matrixVector(Matrix* M, Vector *v)
   }
   return y;
 }
+
+double DotProduct(double *x, double *y,int vectorSize)
+{
+  double result = 0.0;
+
+  #pragma omp parallel for reduction(+ : result)
+    for (int i = 0; i < vectorSize; i++)
+    {
+      result += x[i] * y[i];
+    }
+  return result;
+}
+
+double NormVector(double *v,int vectorSize)
+{
+  double result = 0.0;
+  result = DotProduct(v,v,vectorSize);
+  result = sqrt(result);
+  return result;
+}
