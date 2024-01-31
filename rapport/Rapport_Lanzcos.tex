@@ -225,7 +225,7 @@
 
     Dans un contexte parallèle, il est essentiel de souligner que des communications et des synchronisations entre les différents threads sont inévitables:
     \begin{itemize}
-    \item \textbf{pragma omp parallel for}:  Lors de l'exécution de l'instruction #pragma omp parallel for, le nombre total d'itérations de la boucle est divisé entre les threads disponibles. Cela nécessite une communication entre les threads pour déterminer quelles itérations sont assignées à chaque thread.
+    \item \textbf{pragma omp parallel for}:  Lors de l'exécution de l'instruction \texttt{\#pragma omp parallel for}, le nombre total d'itérations de la boucle est divisé entre les threads disponibles. Cela nécessite une communication entre les threads pour déterminer quelles itérations sont assignées à chaque thread.
     
     \item \textbf{pragma omp parallel for reduction}:  À la fin de la boucle, une opération de réduction est effectuée sur les résultats partiels pour obtenir le résultat final. Cette opération de réduction implique une communication entre les threads pour agréger les résultats partiels.
 	\end{itemize}
