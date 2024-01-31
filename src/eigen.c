@@ -46,16 +46,6 @@ EigenProblem computeEigen(Matrix* A)
       }
     }
   }
-  /*
-  for (size_t i = 0; i < A->n_rows; i++)
-  {
-    for (size_t j = 0; j < A->n_cols; j++)
-    {
-      printf("%6.3e ",a[i*A->n_cols + j]);
-    }
-    printf("\n");
-  }
-  */
   // On exit, A has been overwritten.
   LAPACKE_dgeev(LAPACK_ROW_MAJOR,
                 'N',

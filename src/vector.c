@@ -1,3 +1,8 @@
+/**
+ * @file vector.c
+ * @brief Implementation of all vector management routines,
+ *        from creation to memory release
+ */
 #include "lanczos.h"
 #include "vector.h"
 

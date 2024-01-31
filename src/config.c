@@ -1,3 +1,7 @@
+/**
+ * @file config.c
+ * @brief Manages arguments and runtime configuration
+ */
 #include "lanczos.h"
 
 runConfig parseCommand(int argc, char* argv[])

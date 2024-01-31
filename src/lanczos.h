@@ -17,6 +17,7 @@
 #include "operations.h"
 #include "eigen.h"
 
+// Structure for Lanczos algorithm input data
 typedef struct
 {
   int m;

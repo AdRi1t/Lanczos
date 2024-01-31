@@ -1,6 +1,11 @@
 #ifndef OPERATIONS_H
 #define OPERATIONS_H
 
+/**
+ * @brief Declares all functions involving mathematical
+ *        operations with matrices or vectors.
+ */
+
 void OP_transpose(Matrix* M);
 Vector OP_MatrixVector(Matrix* M, Vector* v);
 

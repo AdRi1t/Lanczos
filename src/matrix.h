@@ -1,6 +1,11 @@
 #ifndef MATRIX_H
 #define MATRIX_H
 
+/**
+ * @file matrix.h
+ * @brief Defines all the routines required for matrices
+ */
+
 typedef enum
 {
   General,

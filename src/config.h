@@ -1,6 +1,7 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
+// Structure of the runtime configuration 
 typedef struct
 {
   int n;

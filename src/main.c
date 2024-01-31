@@ -40,8 +40,10 @@ int main(int argc, char const *argv[])
 
     out = computeLanzcosAlgo(in);
     
+    printf("H : \n");
     printMatrix(&out.H);
     printf("\n");
+    printf("V : \n");
     printMatrix(&out.V);
     
     freeMatrix(&out.H);

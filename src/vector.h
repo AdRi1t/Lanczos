@@ -1,6 +1,10 @@
 #ifndef VECTOR_H
 #define VECTOR_H 
 
+/**
+ * @brief Defines all the routines required for vector
+ */
+
 typedef struct
 {
   double *array_real;

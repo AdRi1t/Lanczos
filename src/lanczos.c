@@ -1,3 +1,7 @@
+/**
+ * @file lanczos.c
+ * @brief Lanczos algorithm file
+ */
 #include "lanczos.h"
 
 
@@ -84,11 +88,8 @@ LanzcosOut computeLanzcosAlgo(LanzcosIn init)
     result.H.array_real[j*result.H.n_cols + j] = a_j;
     if(j > 0)
     {
+      result.H.array_real[(j-1)*result.H.n_cols + j] = B_j;
       result.H.array_real[j*result.H.n_cols + j - 1] = B_j;
-    }
-    if(j < init.m - 1)
-    {
-      result.H.array_real[j*result.H.n_cols + j + 1] = B_j;
     }
     
     // 7 v_j+1 = w_j/b_j+1

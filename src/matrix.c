@@ -1,9 +1,13 @@
+/**
+ * @file matrix.c
+ * @brief Implements all matrix management routines, from creation to memory release
+ */
 #include "lanczos.h"
 #include "matrix.h"
 #include "mmio.h"
 
-// "High level"
 
+// "High level"
 Matrix createMatrix(Matrix_type type, bool setComplex) 
 { 
   Matrix M;

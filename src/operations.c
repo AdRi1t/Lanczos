@@ -1,3 +1,9 @@
+/**
+ * @file operations.c
+ * @brief All the mathematical functions for general or symmetrical
+ *        matrices, with real or complex coefficients.
+ * 
+ */
 #include "lanczos.h"
 #include "operations.h"
 
