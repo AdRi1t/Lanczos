@@ -116,40 +116,41 @@ int main(int argc, char const *argv[])
   // Test version of Matrix vector product
   printf("V1, V2, V3 : \n");
   A = createMatrix(Symmetric,false);
-  setDimensionMatrix(&A, 10000, 10000);
+  setDimensionMatrix(&A, 20000, 20000);
   allocateMatrix(&A);
   fillRandomMatrix(&A);
-  v = createVector(10000, false);
+  v = createVector(20000, false);
   allocateVector(&v);
 
   double t1,t2,time;
   t1 = getTime();
-  for (size_t j = 0; j < 31; j++)
+  for (size_t j = 0; j < 60; j++)
   {
     r = OP_Real_Symmetric_matrixVector(&A,&v);
     freeVector(&r);
   }
   t2 = getTime();
-  time = (t2 - t1) / 31;
+  time = (t2 - t1) / 60;
   printf("v1 time : %6.3f s\n",time);
+  sleep(5);
   t1 = getTime();
-  for (size_t j = 0; j < 31; j++)
+  for (size_t j = 0; j < 60; j++)
   {
     r = OP_Real_Symmetric_matrixVector_V2(&A,&v);
     freeVector(&r);
   }
   t2 = getTime();
-  time = (t2 - t1) / 31;
+  time = (t2 - t1) / 60;
   printf("v2 time : %6.3f s\n",time);
-
+  sleep(5);
   t1 = getTime();
-  for (size_t j = 0; j < 31; j++)
+  for (size_t j = 0; j < 60; j++)
   {
     r = OP_Real_Symmetric_matrixVector_V3(&A,&v);
     freeVector(&r);
   }
   t2 = getTime();
-  time = (t2 - t1) / 31;
+  time = (t2 - t1) / 60;
   printf("V3 time : %6.3f s\n",time);
  
   freeVector(&v);
